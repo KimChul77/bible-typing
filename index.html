@@ -3,139 +3,730 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>성경 타자 연습 8탄</title>
-
+<title>성경 타자 연습 9탄</title>
 <style>
-body {
-  margin:0;
-  font-family: 'Malgun Gothic', sans-serif;
-  background:#000;
-  color:#fff;
-  text-align:center;
-}
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+    background: linear-gradient(180deg, #5378c9 0%, #d8e6ff 45%, #eef5ff 100%);
+    color: #1f2f4f;
+  }
 
-#startScreen {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200') center/cover;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
+  #startScreen {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
 
-.overlay {
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-}
+  #startScreen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(8, 20, 50, 0.48), rgba(8, 20, 50, 0.32)),
+      url("https://commons.wikimedia.org/wiki/Special:FilePath/CompositeJesus.JPG") center top / cover no-repeat;
+    filter: saturate(1.02);
+    z-index: 0;
+  }
 
-.start-content {
-  position:relative;
-  z-index:2;
-}
+  .start-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 860px;
+    background: rgba(255,255,255,0.88);
+    border-radius: 30px;
+    padding: 26px;
+    box-shadow: 0 20px 55px rgba(0,0,0,0.22);
+    backdrop-filter: blur(4px);
+    text-align: center;
+  }
 
-h1 {
-  font-size:36px;
-  margin-bottom:20px;
-}
+  .title {
+    margin: 0 0 8px 0;
+    font-size: 42px;
+    font-weight: 900;
+    color: #1f4b92;
+  }
 
-button {
-  padding:15px 25px;
-  font-size:20px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-}
+  .sub {
+    margin: 0 0 18px 0;
+    color: #5c7097;
+    font-size: 18px;
+    line-height: 1.5;
+  }
 
-#gameScreen {
-  display:none;
-  padding:20px;
-}
+  .jesus-frame {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto 18px auto;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    border: 4px solid rgba(255,255,255,0.7);
+  }
 
-textarea {
-  width:90%;
-  height:120px;
-  font-size:20px;
-}
+  .jesus-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 
-.top-bar {
-  position:fixed;
-  top:10px;
-  right:10px;
-}
+  .verse-box {
+    background: linear-gradient(180deg, #f7fbff 0%, #edf5ff 100%);
+    border: 2px solid #d8e7ff;
+    border-radius: 22px;
+    padding: 18px;
+    margin-top: 14px;
+  }
 
+  .verse-big {
+    font-size: 29px;
+    line-height: 1.7;
+    font-weight: 800;
+    color: #28487b;
+    word-break: keep-all;
+  }
+
+  .verse-ref {
+    margin-top: 8px;
+    font-size: 16px;
+    color: #6a7ea5;
+  }
+
+  .main-btn {
+    margin-top: 20px;
+    border: none;
+    border-radius: 18px;
+    padding: 18px 28px;
+    font-size: 25px;
+    font-weight: 900;
+    background: #4d84ff;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(77,132,255,0.28);
+  }
+
+  .small-note {
+    margin-top: 16px;
+    color: #6c7e9f;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  #gameScreen {
+    display: none;
+    min-height: 100vh;
+    padding: 18px;
+    position: relative;
+  }
+
+  #gameScreen::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      linear-gradient(rgba(8, 24, 56, 0.18), rgba(8, 24, 56, 0.24)),
+      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+    opacity: 0.45;
+    z-index: -1;
+  }
+
+  .top-bar {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 10px;
+    z-index: 999;
+    flex-wrap: wrap;
+  }
+
+  .top-btn {
+    border: none;
+    border-radius: 14px;
+    padding: 11px 14px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    color: #214a8a;
+    background: rgba(255,255,255,0.94);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  }
+
+  .card {
+    width: 100%;
+    max-width: 1020px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.97);
+    border-radius: 30px;
+    box-shadow: 0 20px 55px rgba(0,0,0,0.16);
+    padding: 24px;
+  }
+
+  .mode-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .mode-btn {
+    border: none;
+    border-radius: 14px;
+    padding: 11px 16px;
+    font-weight: 800;
+    cursor: pointer;
+    background: #edf2fb;
+    color: #3b4d73;
+  }
+
+  .mode-btn.active {
+    background: #4d84ff;
+    color: white;
+  }
+
+  .progress-wrap {
+    width: 100%;
+    background: #eaf1ff;
+    border-radius: 999px;
+    height: 18px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    border: 1px solid #cfdfff;
+  }
+
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #5d8dff, #20b26b);
+    transition: width 0.35s ease;
+  }
+
+  .question-box {
+    background: #eef5ff;
+    border: 2px solid #cfe0ff;
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+
+  .question-ref {
+    font-size: 18px;
+    font-weight: 800;
+    color: #3c5d94;
+    margin-bottom: 12px;
+  }
+
+  .question-text {
+    font-size: 35px;
+    line-height: 1.65;
+    font-weight: 800;
+    color: #22375d;
+    word-break: keep-all;
+  }
+
+  .typing-input {
+    width: 100%;
+    min-height: 165px;
+    resize: vertical;
+    padding: 18px;
+    font-size: 27px;
+    line-height: 1.6;
+    border-radius: 18px;
+    border: 2px solid #bfd3ff;
+    outline: none;
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+    background: rgba(255,255,255,0.97);
+  }
+
+  .typing-input:focus {
+    border-color: #5d8dff;
+    box-shadow: 0 0 0 4px rgba(93,141,255,0.12);
+  }
+
+  .typing-input.correct {
+    border-color: #1ea564;
+    box-shadow: 0 0 0 4px rgba(30,165,100,0.14);
+  }
+
+  .typing-input.wrong {
+    border-color: #d54a4a;
+    box-shadow: 0 0 0 4px rgba(213,74,74,0.12);
+  }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .action-btn {
+    border: none;
+    border-radius: 16px;
+    padding: 15px 12px;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .btn-check { background: #4d84ff; color: white; }
+  .btn-next { background: #20b26b; color: white; }
+  .btn-reset { background: #edf2fb; color: #30415f; }
+  .btn-home  { background: #ffcf57; color: #5e4500; }
+  .btn-show  { background: #ff9c66; color: white; }
+  .btn-skip  { background: #a37bff; color: white; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .info-box {
+    background: #f7faff;
+    border: 1px solid #d8e5ff;
+    border-radius: 18px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .info-title {
+    font-size: 12px;
+    color: #6b81a9;
+    margin-bottom: 7px;
+    font-weight: 800;
+  }
+
+  .info-value {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1c3d7a;
+  }
+
+  .result {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 18px;
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    background: #f1f5fb;
+    color: #35507d;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.4;
+  }
+
+  .answer-preview {
+    margin-top: 14px;
+    padding: 16px;
+    border-radius: 16px;
+    background: #fff7e8;
+    border: 1px solid #ffd49f;
+    color: #7a4f00;
+    font-size: 18px;
+    line-height: 1.7;
+    display: none;
+    word-break: keep-all;
+  }
+
+  .help {
+    font-size: 16px;
+    color: #6f7f97;
+    margin-top: 14px;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1080px) {
+    .info-grid { grid-template-columns: repeat(5, 1fr); }
+    .buttons { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 760px) {
+    .buttons { grid-template-columns: repeat(2, 1fr); }
+    .title { font-size: 34px; }
+    .question-text { font-size: 28px; }
+    .typing-input { font-size: 22px; min-height: 135px; }
+    .verse-big { font-size: 24px; }
+  }
+
+  @media (max-width: 520px) {
+    .start-card, .card { padding: 18px; border-radius: 22px; }
+    .title { font-size: 30px; }
+    .sub { font-size: 16px; }
+    .question-text { font-size: 24px; }
+    .typing-input { font-size: 20px; }
+    .info-grid { grid-template-columns: repeat(2, 1fr); }
+    .top-bar { top: 8px; right: 8px; }
+    .top-btn { padding: 9px 11px; font-size: 14px; }
+    .main-btn { font-size: 22px; }
+  }
 </style>
 </head>
-
 <body>
 
 <audio id="bgm" loop>
-<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b8c57.mp3" type="audio/mp3">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
 </audio>
 
-<div class="top-bar">
-<button onclick="toggleBGM()">🎵 찬양</button>
-</div>
-
 <div id="startScreen">
-<div class="overlay"></div>
-<div class="start-content">
-<h1>🙏 성경 타자 연습 8탄</h1>
-<p>예수님과 함께 말씀 연습</p>
-<button onclick="startGame()">시작하기</button>
-</div>
+  <div class="start-card">
+    <h1 class="title">성경 타자 연습 9탄</h1>
+    <p class="sub">은혜로운 예수님 이미지와 함께 시작하는 업그레이드 버전</p>
+
+    <div class="jesus-frame">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/CompositeJesus.JPG" alt="예수님 이미지">
+    </div>
+
+    <div class="verse-box">
+      <div class="verse-big">수고하고 무거운 짐 진 자들아 다 내게로 오라<br>내가 너희를 쉬게 하리라.</div>
+      <div class="verse-ref">마태복음 11:28</div>
+    </div>
+
+    <button class="main-btn" id="startBtn">시작하기</button>
+
+    <div class="small-note">
+      오른쪽 위의 🎵 버튼으로 조용한 배경 찬양 재생<br>
+      시작하기를 누르면 성경 타자 연습이 시작됩니다
+    </div>
+  </div>
 </div>
 
 <div id="gameScreen">
-<h2 id="verse"></h2>
-<textarea id="input"></textarea><br><br>
-<button onclick="check()">정답확인</button>
-<button onclick="next()">다음</button>
-<p id="result"></p>
+  <div class="top-bar">
+    <button class="top-btn" onclick="toggleBGM()">🎵 찬양</button>
+    <button class="top-btn" onclick="shareSite()">📱 공유</button>
+  </div>
+
+  <div class="card">
+    <h1 class="title">성경 타자 연습 9탄</h1>
+    <p class="sub">구절을 보고 그대로 입력해 보세요</p>
+
+    <div class="mode-bar">
+      <button class="mode-btn active" id="modeRandomBtn">랜덤</button>
+      <button class="mode-btn" id="modeSequentialBtn">순서대로</button>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="question-box">
+      <div class="question-ref" id="verseRef">구절</div>
+      <div class="question-text" id="verseText">불러오는 중...</div>
+    </div>
+
+    <textarea id="typingInput" class="typing-input" placeholder="여기에 성경 구절을 그대로 입력하세요"></textarea>
+
+    <div class="buttons">
+      <button class="action-btn btn-check" id="checkBtn">정답 확인</button>
+      <button class="action-btn btn-next" id="nextBtn">다음 구절</button>
+      <button class="action-btn btn-reset" id="resetBtn">입력 지우기</button>
+      <button class="action-btn btn-show" id="showAnswerBtn">정답 보기</button>
+      <button class="action-btn btn-skip" id="skipBtn">스킵</button>
+      <button class="action-btn btn-home" id="homeBtn">처음 화면</button>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-box"><div class="info-title">문제 번호</div><div class="info-value" id="currentNum">1</div></div>
+      <div class="info-box"><div class="info-title">맞춘 개수</div><div class="info-value" id="correctCount">0</div></div>
+      <div class="info-box"><div class="info-title">시도 횟수</div><div class="info-value" id="tryCount">0</div></div>
+      <div class="info-box"><div class="info-title">정확도</div><div class="info-value" id="accuracy">0%</div></div>
+      <div class="info-box"><div class="info-title">시간</div><div class="info-value" id="timer">0초</div></div>
+      <div class="info-box"><div class="info-title">현재 콤보</div><div class="info-value" id="combo">0</div></div>
+      <div class="info-box"><div class="info-title">최고 콤보</div><div class="info-value" id="maxCombo">0</div></div>
+      <div class="info-box"><div class="info-title">남은 문제</div><div class="info-value" id="remainCount">0</div></div>
+      <div class="info-box"><div class="info-title">스킵 횟수</div><div class="info-value" id="skipCount">0</div></div>
+      <div class="info-box"><div class="info-title">힌트 사용</div><div class="info-value" id="hintCount">0</div></div>
+    </div>
+
+    <div class="result" id="resultBox">시작 후 말씀을 입력해 주세요</div>
+    <div class="answer-preview" id="answerPreview"></div>
+
+    <div class="help">
+      Ctrl + Enter = 정답 확인 / 정답 보기 = 힌트 사용 / 스킵 = 다음 문제로 이동
+    </div>
+  </div>
 </div>
 
 <script>
-const verses = [
-"태초에 하나님이 천지를 창조하시니라.",
-"여호와는 나의 목자시니 내게 부족함이 없으리로다.",
-"쉬지 말고 기도하라.",
-"항상 기뻐하라."
+const BIBLE_VERSES = [
+  { ref: "창세기 1:1", text: "태초에 하나님이 천지를 창조하시니라." },
+  { ref: "출애굽기 14:14", text: "여호와께서 너희를 위하여 싸우시리니 너희는 가만히 있을지니라." },
+  { ref: "신명기 6:5", text: "너는 마음을 다하고 뜻을 다하고 힘을 다하여 네 하나님 여호와를 사랑하라." },
+  { ref: "여호수아 1:9", text: "강하고 담대하라 두려워하지 말며 놀라지 말라 네가 어디로 가든지 네 하나님 여호와가 너와 함께 하느니라 하시니라." },
+  { ref: "시편 23:1", text: "여호와는 나의 목자시니 내게 부족함이 없으리로다." },
+  { ref: "시편 27:1", text: "여호와는 나의 빛이요 나의 구원이시니 내가 누구를 두려워하리요." },
+  { ref: "시편 46:1", text: "하나님은 우리의 피난처시요 힘이시니 환난 중에 만날 큰 도움이시라." },
+  { ref: "시편 84:11", text: "여호와 하나님은 해요 방패시라 여호와께서 은혜와 영화를 주시며 정직하게 행하는 자에게 좋은 것을 아끼지 아니하실 것임이니이다." },
+  { ref: "시편 119:105", text: "주의 말씀은 내 발에 등이요 내 길에 빛이니이다." },
+  { ref: "잠언 3:5", text: "너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라." },
+  { ref: "이사야 40:31", text: "오직 여호와를 앙망하는 자는 새 힘을 얻으리니 독수리가 날개치며 올라감 같을 것이요 달음박질하여도 곤비하지 아니하겠고 걸어가도 피곤하지 아니하리로다." },
+  { ref: "이사야 41:10", text: "두려워하지 말라 내가 너와 함께 함이라 놀라지 말라 나는 네 하나님이 됨이라 내가 너를 굳세게 하리라 참으로 너를 도와 주리라 참으로 나의 의로운 오른손으로 너를 붙들리라." },
+  { ref: "예레미야 29:11", text: "여호와의 말씀이니라 너희를 향한 나의 생각을 내가 아나니 평안이요 재앙이 아니니라 너희에게 미래와 희망을 주는 것이니라." },
+  { ref: "마태복음 6:33", text: "너희는 먼저 그의 나라와 그의 의를 구하라 그리하면 이 모든 것을 너희에게 더하시리라." },
+  { ref: "마태복음 11:28", text: "수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라." },
+  { ref: "마태복음 28:20", text: "볼지어다 내가 세상 끝날까지 너희와 항상 함께 있으리라 하시니라." },
+  { ref: "마가복음 9:23", text: "예수께서 이르시되 할 수 있거든이 무슨 말이냐 믿는 자에게는 능히 하지 못할 일이 없느니라 하시니." },
+  { ref: "누가복음 18:27", text: "이르시되 무릇 사람이 할 수 없는 것을 하나님은 하실 수 있느니라." },
+  { ref: "요한복음 3:16", text: "하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려 하심이라." },
+  { ref: "요한복음 8:12", text: "예수께서 또 말씀하여 이르시되 나는 세상의 빛이니 나를 따르는 자는 어둠에 다니지 아니하고 생명의 빛을 얻으리라." },
+  { ref: "요한복음 14:6", text: "예수께서 이르시되 내가 곧 길이요 진리요 생명이니 나로 말미암지 않고는 아버지께로 올 자가 없느니라." },
+  { ref: "사도행전 16:31", text: "이르되 주 예수를 믿으라 그리하면 너와 네 집이 구원을 받으리라 하고." },
+  { ref: "로마서 8:28", text: "우리가 알거니와 하나님을 사랑하는 자 곧 그의 뜻대로 부르심을 입은 자들에게는 모든 것이 합력하여 선을 이루느니라." },
+  { ref: "로마서 12:2", text: "너희는 이 세대를 본받지 말고 오직 마음을 새롭게 함으로 변화를 받아 하나님의 선하시고 기뻐하시고 온전하신 뜻이 무엇인지 분별하도록 하라." },
+  { ref: "고린도전서 10:13", text: "사람이 감당할 시험 밖에는 너희가 당한 것이 없나니 오직 하나님은 미쁘사 너희가 감당하지 못할 시험 당함을 허락하지 아니하시고 시험 당할 즈음에 또한 피할 길을 내사 너희로 능히 감당하게 하시느니라." },
+  { ref: "고린도후서 5:17", text: "그런즉 누구든지 그리스도 안에 있으면 새로운 피조물이라 이전 것은 지나갔으니 보라 새 것이 되었도다." },
+  { ref: "갈라디아서 2:20", text: "내가 그리스도와 함께 십자가에 못 박혔나니 그런즉 이제는 내가 사는 것이 아니요 오직 내 안에 그리스도께서 사시는 것이라 이제 내가 육체 가운데 사는 것은 나를 사랑하사 나를 위하여 자기 자신을 버리신 하나님의 아들을 믿는 믿음 안에서 사는 것이라." },
+  { ref: "에베소서 2:8", text: "너희는 그 은혜에 의하여 믿음으로 말미암아 구원을 받았으니 이것은 너희에게서 난 것이 아니요 하나님의 선물이라." },
+  { ref: "빌립보서 4:6", text: "아무 것도 염려하지 말고 다만 모든 일에 기도와 간구로 너희 구할 것을 감사함으로 하나님께 아뢰라." },
+  { ref: "빌립보서 4:13", text: "내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라." },
+  { ref: "데살로니가전서 5:16", text: "항상 기뻐하라." },
+  { ref: "데살로니가전서 5:17", text: "쉬지 말고 기도하라." },
+  { ref: "데살로니가전서 5:18", text: "범사에 감사하라 이것이 그리스도 예수 안에서 너희를 향하신 하나님의 뜻이니라." },
+  { ref: "디모데후서 3:16", text: "모든 성경은 하나님의 감동으로 된 것으로 교훈과 책망과 바르게 함과 의로 교육하기에 유익하니." },
+  { ref: "히브리서 11:1", text: "믿음은 바라는 것들의 실상이요 보이지 않는 것들의 증거니." },
+  { ref: "야고보서 1:5", text: "너희 중에 누구든지 지혜가 부족하거든 모든 사람에게 후히 주시고 꾸짖지 아니하시는 하나님께 구하라 그리하면 주시리라." },
+  { ref: "베드로전서 5:7", text: "너희 염려를 다 주께 맡기라 이는 그가 너희를 돌보심이라." },
+  { ref: "요한일서 4:19", text: "우리가 사랑함은 그가 먼저 우리를 사랑하셨음이라." }
 ];
 
-let current = 0;
+const startScreen = document.getElementById("startScreen");
+const gameScreen = document.getElementById("gameScreen");
+const startBtn = document.getElementById("startBtn");
+const verseRef = document.getElementById("verseRef");
+const verseText = document.getElementById("verseText");
+const typingInput = document.getElementById("typingInput");
+const answerPreview = document.getElementById("answerPreview");
+const checkBtn = document.getElementById("checkBtn");
+const nextBtn = document.getElementById("nextBtn");
+const resetBtn = document.getElementById("resetBtn");
+const homeBtn = document.getElementById("homeBtn");
+const showAnswerBtn = document.getElementById("showAnswerBtn");
+const skipBtn = document.getElementById("skipBtn");
+const modeRandomBtn = document.getElementById("modeRandomBtn");
+const modeSequentialBtn = document.getElementById("modeSequentialBtn");
+const resultBox = document.getElementById("resultBox");
+const currentNum = document.getElementById("currentNum");
+const correctCountEl = document.getElementById("correctCount");
+const tryCountEl = document.getElementById("tryCount");
+const accuracyEl = document.getElementById("accuracy");
+const timerEl = document.getElementById("timer");
+const comboEl = document.getElementById("combo");
+const maxComboEl = document.getElementById("maxCombo");
+const remainCountEl = document.getElementById("remainCount");
+const skipCountEl = document.getElementById("skipCount");
+const hintCountEl = document.getElementById("hintCount");
+const progressBar = document.getElementById("progressBar");
 
-function startGame(){
-document.getElementById("startScreen").style.display="none";
-document.getElementById("gameScreen").style.display="block";
-load();
+let currentIndex = 0;
+let correctCount = 0;
+let tryCount = 0;
+let usedIndexes = [];
+let seconds = 0;
+let timerInterval = null;
+let combo = 0;
+let maxCombo = 0;
+let bgmPlaying = false;
+let randomMode = true;
+let sequentialIndex = 0;
+let skipCount = 0;
+let hintCount = 0;
+
+function normalizeText(text) {
+  return text.replace(/\r\n/g, "\n").replace(/\s+/g, " ").trim();
+}
+function getAccuracy() {
+  return tryCount > 0 ? Math.round((correctCount / tryCount) * 100) : 0;
+}
+function updateInfoUI() {
+  correctCountEl.textContent = correctCount;
+  tryCountEl.textContent = tryCount;
+  currentNum.textContent = usedIndexes.length || 1;
+  accuracyEl.textContent = getAccuracy() + "%";
+  timerEl.textContent = seconds + "초";
+  comboEl.textContent = combo;
+  maxComboEl.textContent = maxCombo;
+  skipCountEl.textContent = skipCount;
+  hintCountEl.textContent = hintCount;
+
+  const total = BIBLE_VERSES.length || 1;
+  const remain = Math.max(0, total - usedIndexes.length);
+  remainCountEl.textContent = remain;
+  const progress = Math.min(100, Math.round((usedIndexes.length / total) * 100));
+  progressBar.style.width = progress + "%";
+}
+function updateModeUI() {
+  modeRandomBtn.classList.toggle("active", randomMode);
+  modeSequentialBtn.classList.toggle("active", !randomMode);
+}
+function setResult(message, bg, color) {
+  resultBox.textContent = message;
+  resultBox.style.background = bg;
+  resultBox.style.color = color;
+}
+function getRandomIndex() {
+  if (usedIndexes.length >= BIBLE_VERSES.length) usedIndexes = [];
+  let idx;
+  do {
+    idx = Math.floor(Math.random() * BIBLE_VERSES.length);
+  } while (usedIndexes.includes(idx) && usedIndexes.length < BIBLE_VERSES.length);
+  usedIndexes.push(idx);
+  return idx;
+}
+function getSequentialIndex() {
+  if (sequentialIndex >= BIBLE_VERSES.length) {
+    sequentialIndex = 0;
+    usedIndexes = [];
+  }
+  const idx = sequentialIndex;
+  sequentialIndex += 1;
+  usedIndexes.push(idx);
+  return idx;
+}
+function loadVerse() {
+  typingInput.classList.remove("correct", "wrong");
+  answerPreview.style.display = "none";
+  answerPreview.textContent = "";
+
+  currentIndex = randomMode ? getRandomIndex() : getSequentialIndex();
+  const item = BIBLE_VERSES[currentIndex];
+  verseRef.textContent = item.ref;
+  verseText.textContent = item.text;
+  typingInput.value = "";
+  updateInfoUI();
+  updateModeUI();
+  setResult("말씀을 입력한 뒤 정답 확인을 눌러 주세요", "#f1f5fb", "#35507d");
+  setTimeout(() => typingInput.focus(), 80);
+}
+function startTimer() {
+  if (timerInterval) return;
+  timerInterval = setInterval(() => {
+    seconds++;
+    updateInfoUI();
+  }, 1000);
+}
+function startGame() {
+  startScreen.style.display = "none";
+  gameScreen.style.display = "block";
+  loadVerse();
+  startTimer();
+}
+function goHome() {
+  gameScreen.style.display = "none";
+  startScreen.style.display = "flex";
+}
+function resetInput() {
+  typingInput.value = "";
+  typingInput.classList.remove("correct", "wrong");
+  typingInput.focus();
+  setResult("입력이 지워졌습니다", "#f1f5fb", "#35507d");
+}
+function nextVerse() {
+  loadVerse();
+}
+function showAnswer() {
+  hintCount++;
+  answerPreview.style.display = "block";
+  answerPreview.textContent = "정답: " + BIBLE_VERSES[currentIndex].text;
+  updateInfoUI();
+  setResult("정답 보기를 사용했습니다", "#fff7e8", "#7a4f00");
+}
+function skipVerse() {
+  skipCount++;
+  combo = 0;
+  updateInfoUI();
+  setResult("문제를 스킵하고 다음 구절로 이동합니다", "#f4efff", "#6940b5");
+  setTimeout(() => { loadVerse(); }, 700);
+}
+function checkAnswer() {
+  const answer = normalizeText(typingInput.value);
+  const original = normalizeText(BIBLE_VERSES[currentIndex].text);
+  if (!answer) {
+    setResult("먼저 구절을 입력해 주세요", "#fff4df", "#8a5a00");
+    return;
+  }
+  tryCount++;
+  if (answer === original) {
+    correctCount++;
+    combo++;
+    if (combo > maxCombo) maxCombo = combo;
+    typingInput.classList.remove("wrong");
+    typingInput.classList.add("correct");
+    updateInfoUI();
+    setResult("정답입니다! 🙏 자동으로 다음 문제로 이동합니다", "#e8fff2", "#0f7a43");
+    setTimeout(() => { loadVerse(); }, 1000);
+  } else {
+    combo = 0;
+    typingInput.classList.remove("correct");
+    typingInput.classList.add("wrong");
+    updateInfoUI();
+    setResult("아쉽습니다. 다시 한번 천천히 입력해 보세요.", "#ffeaea", "#a12626");
+  }
+}
+async function toggleBGM() {
+  const bgm = document.getElementById("bgm");
+  try {
+    if (!bgmPlaying) {
+      await bgm.play();
+      bgmPlaying = true;
+    } else {
+      bgm.pause();
+      bgmPlaying = false;
+    }
+  } catch (e) {
+    alert("브라우저가 재생을 막았어요. 버튼을 한 번 더 눌러보세요.");
+  }
+}
+async function shareSite() {
+  const url = "https://kimchul77.github.io/bible-typing/";
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: "성경 타자 연습 9탄", text: "성경 타자 연습 사이트", url });
+    } else if (navigator.clipboard) {
+      await navigator.clipboard.writeText(url);
+      alert("링크가 복사되었습니다! 카카오톡에 붙여넣기 해주세요 👍");
+    } else {
+      alert(url);
+    }
+  } catch (e) {}
 }
 
-function load(){
-document.getElementById("verse").innerText = verses[current];
-document.getElementById("input").value="";
-}
+modeRandomBtn.addEventListener("click", () => {
+  randomMode = true;
+  updateModeUI();
+  loadVerse();
+});
+modeSequentialBtn.addEventListener("click", () => {
+  randomMode = false;
+  updateModeUI();
+  loadVerse();
+});
+startBtn.addEventListener("click", startGame);
+checkBtn.addEventListener("click", checkAnswer);
+nextBtn.addEventListener("click", nextVerse);
+resetBtn.addEventListener("click", resetInput);
+homeBtn.addEventListener("click", goHome);
+showAnswerBtn.addEventListener("click", showAnswer);
+skipBtn.addEventListener("click", skipVerse);
+typingInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && e.ctrlKey) checkAnswer();
+});
 
-function check(){
-let input = document.getElementById("input").value.trim();
-if(input === verses[current]){
-document.getElementById("result").innerText="정답 🙏";
-}else{
-document.getElementById("result").innerText="다시 시도";
-}
-}
-
-function next(){
-current = (current+1) % verses.length;
-load();
-}
-
-function toggleBGM(){
-let bgm = document.getElementById("bgm");
-if(bgm.paused){ bgm.play(); } else { bgm.pause(); }
-}
+updateInfoUI();
+updateModeUI();
 </script>
 
 </body>
