@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>성경 타자 연습 6탄</title>
+  <title>성경 타자 연습 7탄</title>
   <style>
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; }
     body {
       font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
       color: #1d2d4a;
-      background: linear-gradient(180deg, #7ea9ff 0%, #cfe2ff 45%, #edf5ff 100%);
+      background: linear-gradient(180deg, #6f9cff 0%, #cfe2ff 45%, #edf5ff 100%);
     }
     #bgOverlay {
       position: fixed;
       inset: 0;
       background:
-        linear-gradient(rgba(8, 24, 56, 0.22), rgba(8, 24, 56, 0.30)),
+        linear-gradient(rgba(7, 22, 52, 0.22), rgba(7, 22, 52, 0.30)),
         url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80");
       background-size: cover;
       background-position: center;
-      opacity: 0.48;
+      opacity: 0.50;
       z-index: -1;
     }
     .top-bar {
@@ -54,7 +54,7 @@
     .screen.active { display: flex; }
     .card {
       width: 100%;
-      max-width: 980px;
+      max-width: 1020px;
       background: rgba(255,255,255,0.97);
       border-radius: 30px;
       box-shadow: 0 20px 55px rgba(0,0,0,0.16);
@@ -74,7 +74,7 @@
       font-size: 18px;
       line-height: 1.5;
     }
-    .hero-box, .daily-box, .rank-box {
+    .hero-box, .daily-box, .rank-box, .challenge-box {
       border-radius: 22px;
       padding: 20px;
       margin-top: 16px;
@@ -132,6 +132,22 @@
     .daily-ref {
       color: #6b7ea3;
       font-size: 15px;
+    }
+    .challenge-box {
+      background: #edfdf2;
+      border: 1px solid #c8f0d3;
+      text-align: center;
+      color: #266242;
+    }
+    .challenge-title {
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .challenge-text {
+      font-size: 18px;
+      line-height: 1.6;
+      font-weight: 800;
     }
     .rank-box {
       background: #fff8df;
@@ -224,7 +240,7 @@
     }
     .buttons {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 10px;
       margin-top: 16px;
     }
@@ -232,7 +248,7 @@
       border: none;
       border-radius: 16px;
       padding: 15px 12px;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 800;
       cursor: pointer;
     }
@@ -241,9 +257,10 @@
     .btn-reset { background: #edf2fb; color: #30415f; }
     .btn-home  { background: #ffcf57; color: #5e4500; }
     .btn-show  { background: #ff9c66; color: white; }
+    .btn-skip  { background: #a37bff; color: white; }
     .info-grid {
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
+      grid-template-columns: repeat(10, 1fr);
       gap: 12px;
       margin-top: 18px;
     }
@@ -255,13 +272,13 @@
       text-align: center;
     }
     .info-title {
-      font-size: 13px;
+      font-size: 12px;
       color: #6b81a9;
       margin-bottom: 7px;
       font-weight: 800;
     }
     .info-value {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 900;
       color: #1c3d7a;
     }
@@ -269,7 +286,7 @@
       margin-top: 18px;
       padding: 18px;
       border-radius: 18px;
-      font-size: 25px;
+      font-size: 24px;
       font-weight: 900;
       text-align: center;
       background: #f1f5fb;
@@ -299,8 +316,8 @@
       text-align: center;
       line-height: 1.5;
     }
-    @media (max-width: 980px) {
-      .info-grid { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 1080px) {
+      .info-grid { grid-template-columns: repeat(5, 1fr); }
       .buttons { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 760px) {
@@ -338,8 +355,8 @@
 
   <div class="screen active" id="startScreen">
     <div class="card">
-      <h1 class="title">성경 타자 연습 6탄</h1>
-      <p class="sub">한 개 파일만 붙여넣으면 되는 통합 버전입니다</p>
+      <h1 class="title">성경 타자 연습 7탄</h1>
+      <p class="sub">한 개 파일 통합본 + 스킵 + 힌트 + 오늘의 챌린지 업그레이드</p>
 
       <div class="hero-box">
         <div class="hero-verse">
@@ -356,17 +373,23 @@
         <div class="daily-ref" id="dailyRef"></div>
       </div>
 
+      <div class="challenge-box">
+        <div class="challenge-title">오늘의 챌린지</div>
+        <div class="challenge-text" id="challengeText">오늘 3문제 이상 맞혀 보세요</div>
+      </div>
+
       <div class="rank-box">
         최고 정확도: <span id="bestAccuracy">0</span>%<br>
         최고 콤보: <span id="bestCombo">0</span><br>
-        최고 맞춘 개수: <span id="bestCorrect">0</span>
+        최고 맞춘 개수: <span id="bestCorrect">0</span><br>
+        최고 연속 정답: <span id="bestStreak">0</span>
       </div>
     </div>
   </div>
 
   <div class="screen" id="gameScreen">
     <div class="card">
-      <h1 class="title">성경 타자 연습 6탄</h1>
+      <h1 class="title">성경 타자 연습 7탄</h1>
       <p class="sub">구절을 보고 그대로 입력해 보세요</p>
 
       <div class="mode-bar">
@@ -390,6 +413,7 @@
         <button class="action-btn btn-next" id="nextBtn">다음 구절</button>
         <button class="action-btn btn-reset" id="resetBtn">입력 지우기</button>
         <button class="action-btn btn-show" id="showAnswerBtn">정답 보기</button>
+        <button class="action-btn btn-skip" id="skipBtn">스킵</button>
         <button class="action-btn btn-home" id="homeBtn">처음 화면</button>
       </div>
 
@@ -402,13 +426,15 @@
         <div class="info-box"><div class="info-title">현재 콤보</div><div class="info-value" id="combo">0</div></div>
         <div class="info-box"><div class="info-title">최고 콤보</div><div class="info-value" id="maxCombo">0</div></div>
         <div class="info-box"><div class="info-title">남은 문제</div><div class="info-value" id="remainCount">0</div></div>
+        <div class="info-box"><div class="info-title">스킵 횟수</div><div class="info-value" id="skipCount">0</div></div>
+        <div class="info-box"><div class="info-title">힌트 사용</div><div class="info-value" id="hintCount">0</div></div>
       </div>
 
       <div class="result" id="resultBox">시작 후 말씀을 입력해 주세요</div>
       <div class="answer-preview" id="answerPreview"></div>
 
       <div class="help">
-        Ctrl + Enter = 정답 확인 / 정답이면 자동 다음 문제 / 오른쪽 위 공유 버튼으로 링크 복사
+        Ctrl + Enter = 정답 확인 / 정답 보기 = 힌트 사용 / 스킵 = 다음 문제로 이동
       </div>
     </div>
   </div>
@@ -467,6 +493,7 @@
     const resetBtn = document.getElementById("resetBtn");
     const homeBtn = document.getElementById("homeBtn");
     const showAnswerBtn = document.getElementById("showAnswerBtn");
+    const skipBtn = document.getElementById("skipBtn");
     const modeRandomBtn = document.getElementById("modeRandomBtn");
     const modeSequentialBtn = document.getElementById("modeSequentialBtn");
     const resultBox = document.getElementById("resultBox");
@@ -478,12 +505,16 @@
     const comboEl = document.getElementById("combo");
     const maxComboEl = document.getElementById("maxCombo");
     const remainCountEl = document.getElementById("remainCount");
+    const skipCountEl = document.getElementById("skipCount");
+    const hintCountEl = document.getElementById("hintCount");
     const progressBar = document.getElementById("progressBar");
     const bestAccuracyEl = document.getElementById("bestAccuracy");
     const bestComboEl = document.getElementById("bestCombo");
     const bestCorrectEl = document.getElementById("bestCorrect");
+    const bestStreakEl = document.getElementById("bestStreak");
     const dailyText = document.getElementById("dailyText");
     const dailyRef = document.getElementById("dailyRef");
+    const challengeText = document.getElementById("challengeText");
 
     let currentIndex = 0;
     let correctCount = 0;
@@ -496,6 +527,8 @@
     let bgmPlaying = false;
     let randomMode = true;
     let sequentialIndex = 0;
+    let skipCount = 0;
+    let hintCount = 0;
 
     function normalizeText(text) {
       return text.replace(/\r\n/g, "\n").replace(/\s+/g, " ").trim();
@@ -504,33 +537,42 @@
       return tryCount > 0 ? Math.round((correctCount / tryCount) * 100) : 0;
     }
     function saveData() {
-      localStorage.setItem("bibleTyping6_correct", String(correctCount));
-      localStorage.setItem("bibleTyping6_try", String(tryCount));
-      localStorage.setItem("bibleTyping6_seconds", String(seconds));
-      localStorage.setItem("bibleTyping6_combo", String(combo));
-      localStorage.setItem("bibleTyping6_maxCombo", String(maxCombo));
-      localStorage.setItem("bibleTyping6_randomMode", randomMode ? "1" : "0");
-      localStorage.setItem("bibleTyping6_sequentialIndex", String(sequentialIndex));
-      const bestAccuracy = Math.max(parseInt(localStorage.getItem("bibleTyping6_bestAccuracy") || "0", 10), getAccuracy());
-      const bestCombo = Math.max(parseInt(localStorage.getItem("bibleTyping6_bestCombo") || "0", 10), maxCombo);
-      const bestCorrect = Math.max(parseInt(localStorage.getItem("bibleTyping6_bestCorrect") || "0", 10), correctCount);
-      localStorage.setItem("bibleTyping6_bestAccuracy", String(bestAccuracy));
-      localStorage.setItem("bibleTyping6_bestCombo", String(bestCombo));
-      localStorage.setItem("bibleTyping6_bestCorrect", String(bestCorrect));
+      localStorage.setItem("bibleTyping7_correct", String(correctCount));
+      localStorage.setItem("bibleTyping7_try", String(tryCount));
+      localStorage.setItem("bibleTyping7_seconds", String(seconds));
+      localStorage.setItem("bibleTyping7_combo", String(combo));
+      localStorage.setItem("bibleTyping7_maxCombo", String(maxCombo));
+      localStorage.setItem("bibleTyping7_randomMode", randomMode ? "1" : "0");
+      localStorage.setItem("bibleTyping7_sequentialIndex", String(sequentialIndex));
+      localStorage.setItem("bibleTyping7_skipCount", String(skipCount));
+      localStorage.setItem("bibleTyping7_hintCount", String(hintCount));
+
+      const bestAccuracy = Math.max(parseInt(localStorage.getItem("bibleTyping7_bestAccuracy") || "0", 10), getAccuracy());
+      const bestCombo = Math.max(parseInt(localStorage.getItem("bibleTyping7_bestCombo") || "0", 10), maxCombo);
+      const bestCorrect = Math.max(parseInt(localStorage.getItem("bibleTyping7_bestCorrect") || "0", 10), correctCount);
+      const bestStreak = Math.max(parseInt(localStorage.getItem("bibleTyping7_bestStreak") || "0", 10), combo);
+
+      localStorage.setItem("bibleTyping7_bestAccuracy", String(bestAccuracy));
+      localStorage.setItem("bibleTyping7_bestCombo", String(bestCombo));
+      localStorage.setItem("bibleTyping7_bestCorrect", String(bestCorrect));
+      localStorage.setItem("bibleTyping7_bestStreak", String(bestStreak));
     }
     function loadData() {
-      correctCount = parseInt(localStorage.getItem("bibleTyping6_correct") || "0", 10) || 0;
-      tryCount = parseInt(localStorage.getItem("bibleTyping6_try") || "0", 10) || 0;
-      seconds = parseInt(localStorage.getItem("bibleTyping6_seconds") || "0", 10) || 0;
-      combo = parseInt(localStorage.getItem("bibleTyping6_combo") || "0", 10) || 0;
-      maxCombo = parseInt(localStorage.getItem("bibleTyping6_maxCombo") || "0", 10) || 0;
-      randomMode = localStorage.getItem("bibleTyping6_randomMode") !== "0";
-      sequentialIndex = parseInt(localStorage.getItem("bibleTyping6_sequentialIndex") || "0", 10) || 0;
+      correctCount = parseInt(localStorage.getItem("bibleTyping7_correct") || "0", 10) || 0;
+      tryCount = parseInt(localStorage.getItem("bibleTyping7_try") || "0", 10) || 0;
+      seconds = parseInt(localStorage.getItem("bibleTyping7_seconds") || "0", 10) || 0;
+      combo = parseInt(localStorage.getItem("bibleTyping7_combo") || "0", 10) || 0;
+      maxCombo = parseInt(localStorage.getItem("bibleTyping7_maxCombo") || "0", 10) || 0;
+      randomMode = localStorage.getItem("bibleTyping7_randomMode") !== "0";
+      sequentialIndex = parseInt(localStorage.getItem("bibleTyping7_sequentialIndex") || "0", 10) || 0;
+      skipCount = parseInt(localStorage.getItem("bibleTyping7_skipCount") || "0", 10) || 0;
+      hintCount = parseInt(localStorage.getItem("bibleTyping7_hintCount") || "0", 10) || 0;
     }
     function updateBestUI() {
-      bestAccuracyEl.textContent = parseInt(localStorage.getItem("bibleTyping6_bestAccuracy") || "0", 10) || 0;
-      bestComboEl.textContent = parseInt(localStorage.getItem("bibleTyping6_bestCombo") || "0", 10) || 0;
-      bestCorrectEl.textContent = parseInt(localStorage.getItem("bibleTyping6_bestCorrect") || "0", 10) || 0;
+      bestAccuracyEl.textContent = parseInt(localStorage.getItem("bibleTyping7_bestAccuracy") || "0", 10) || 0;
+      bestComboEl.textContent = parseInt(localStorage.getItem("bibleTyping7_bestCombo") || "0", 10) || 0;
+      bestCorrectEl.textContent = parseInt(localStorage.getItem("bibleTyping7_bestCorrect") || "0", 10) || 0;
+      bestStreakEl.textContent = parseInt(localStorage.getItem("bibleTyping7_bestStreak") || "0", 10) || 0;
     }
     function updateModeUI() {
       modeRandomBtn.classList.toggle("active", randomMode);
@@ -544,6 +586,9 @@
       timerEl.textContent = seconds + "초";
       comboEl.textContent = combo;
       maxComboEl.textContent = maxCombo;
+      skipCountEl.textContent = skipCount;
+      hintCountEl.textContent = hintCount;
+
       const total = BIBLE_VERSES.length || 1;
       const remain = Math.max(0, total - usedIndexes.length);
       remainCountEl.textContent = remain;
@@ -560,6 +605,10 @@
       const index = day % BIBLE_VERSES.length;
       dailyText.textContent = BIBLE_VERSES[index].text;
       dailyRef.textContent = BIBLE_VERSES[index].ref;
+    }
+    function updateChallenge() {
+      const need = Math.max(0, 3 - correctCount);
+      challengeText.textContent = need === 0 ? "오늘의 챌린지를 완료했어요 🙏" : `오늘 ${need}문제 더 맞히면 챌린지 완료입니다`;
     }
     function getRandomIndex() {
       if (usedIndexes.length >= BIBLE_VERSES.length) usedIndexes = [];
@@ -591,6 +640,7 @@
       typingInput.value = "";
       updateInfoUI();
       updateModeUI();
+      updateChallenge();
       saveData();
       setResult("말씀을 입력한 뒤 정답 확인을 눌러 주세요", "#f1f5fb", "#35507d");
       setTimeout(() => typingInput.focus(), 80);
@@ -609,12 +659,14 @@
       loadData();
       updateInfoUI();
       updateModeUI();
+      updateChallenge();
       loadVerse();
       startTimer();
     }
     function goHome() {
       saveData();
       updateBestUI();
+      updateChallenge();
       gameScreen.classList.remove("active");
       startScreen.classList.add("active");
     }
@@ -626,8 +678,20 @@
     }
     function nextVerse() { loadVerse(); }
     function showAnswer() {
+      hintCount++;
       answerPreview.style.display = "block";
       answerPreview.textContent = "정답: " + BIBLE_VERSES[currentIndex].text;
+      updateInfoUI();
+      saveData();
+      setResult("정답 보기를 사용했습니다", "#fff7e8", "#7a4f00");
+    }
+    function skipVerse() {
+      skipCount++;
+      combo = 0;
+      updateInfoUI();
+      saveData();
+      setResult("문제를 스킵하고 다음 구절로 이동합니다", "#f4efff", "#6940b5");
+      setTimeout(() => { loadVerse(); }, 700);
     }
     function checkAnswer() {
       const answer = normalizeText(typingInput.value);
@@ -644,6 +708,7 @@
         typingInput.classList.remove("wrong");
         typingInput.classList.add("correct");
         updateInfoUI();
+        updateChallenge();
         saveData();
         updateBestUI();
         setResult("정답입니다! 🙏 자동으로 다음 문제로 이동합니다", "#e8fff2", "#0f7a43");
@@ -653,6 +718,7 @@
         typingInput.classList.remove("correct");
         typingInput.classList.add("wrong");
         updateInfoUI();
+        updateChallenge();
         saveData();
         updateBestUI();
         setResult("아쉽습니다. 다시 한번 천천히 입력해 보세요.", "#ffeaea", "#a12626");
@@ -676,7 +742,7 @@
       const url = "https://kimchul77.github.io/bible-typing/";
       try {
         if (navigator.share) {
-          await navigator.share({ title: "성경 타자 연습 6탄", text: "성경 타자 연습 사이트", url });
+          await navigator.share({ title: "성경 타자 연습 7탄", text: "성경 타자 연습 사이트", url });
         } else if (navigator.clipboard) {
           await navigator.clipboard.writeText(url);
           alert("링크가 복사되었습니다! 카카오톡에 붙여넣기 해주세요 👍");
@@ -685,6 +751,7 @@
         }
       } catch (e) {}
     }
+
     modeRandomBtn.addEventListener("click", () => {
       randomMode = true;
       updateModeUI();
@@ -703,13 +770,17 @@
     resetBtn.addEventListener("click", resetInput);
     homeBtn.addEventListener("click", goHome);
     showAnswerBtn.addEventListener("click", showAnswer);
+    skipBtn.addEventListener("click", skipVerse);
+
     typingInput.addEventListener("keydown", function (e) {
       if (e.key === "Enter" && e.ctrlKey) checkAnswer();
     });
+
     loadData();
     updateBestUI();
     updateModeUI();
     pickDailyVerse();
+    updateChallenge();
   </script>
 </body>
 </html>
