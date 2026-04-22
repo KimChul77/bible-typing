@@ -38,21 +38,3 @@ window.BIBLE_VERSES = [
   { ref: "베드로전서 5:7", text: "너희 염려를 다 주께 맡기라 이는 그가 너희를 돌보심이라." },
   { ref: "요한일서 4:19", text: "우리가 사랑함은 그가 먼저 우리를 사랑하셨음이라." }
 ];
-let bgmPlaying = false;
-
-function toggleBGM() {
-  const bgm = document.getElementById("bgm");
-  if (!bgmPlaying) {
-    bgm.play();
-    bgmPlaying = true;
-  } else {
-    bgm.pause();
-    bgmPlaying = false;
-  }
-}
-
-function shareKakao() {
-  const url = "https://kimchul77.github.io/bible-typing/";
-  navigator.clipboard.writeText(url);
-  alert("링크가 복사되었습니다! 카카오톡에 붙여넣기 해주세요 👍");
-}
