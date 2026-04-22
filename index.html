@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>성경 타자 연습 9탄</title>
+<title>성경 타자 연습 10탄</title>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
   body {
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-    background: linear-gradient(180deg, #5378c9 0%, #d8e6ff 45%, #eef5ff 100%);
-    color: #1f2f4f;
+    background: linear-gradient(180deg, #6289d6 0%, #d8e8ff 45%, #eef5ff 100%);
+    color: #203250;
   }
 
   #startScreen {
@@ -28,9 +28,8 @@
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(rgba(8, 20, 50, 0.48), rgba(8, 20, 50, 0.32)),
-      url("https://commons.wikimedia.org/wiki/Special:FilePath/CompositeJesus.JPG") center top / cover no-repeat;
-    filter: saturate(1.02);
+      linear-gradient(rgba(9, 24, 52, 0.40), rgba(9, 24, 52, 0.24)),
+      url("https://commons.wikimedia.org/wiki/Special:FilePath/Mountain_lake_%28Unsplash%29.jpg") center center / cover no-repeat;
     z-index: 0;
   }
 
@@ -38,10 +37,10 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 860px;
+    max-width: 900px;
     background: rgba(255,255,255,0.88);
     border-radius: 30px;
-    padding: 26px;
+    padding: 28px;
     box-shadow: 0 20px 55px rgba(0,0,0,0.22);
     backdrop-filter: blur(4px);
     text-align: center;
@@ -49,7 +48,7 @@
 
   .title {
     margin: 0 0 8px 0;
-    font-size: 42px;
+    font-size: 43px;
     font-weight: 900;
     color: #1f4b92;
   }
@@ -61,39 +60,23 @@
     line-height: 1.5;
   }
 
-  .jesus-frame {
-    width: 100%;
-    max-width: 360px;
-    margin: 0 auto 18px auto;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-    border: 4px solid rgba(255,255,255,0.7);
-  }
-
-  .jesus-frame img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  .verse-box {
+  .hero-box {
     background: linear-gradient(180deg, #f7fbff 0%, #edf5ff 100%);
     border: 2px solid #d8e7ff;
     border-radius: 22px;
-    padding: 18px;
+    padding: 20px;
     margin-top: 14px;
   }
 
-  .verse-big {
-    font-size: 29px;
+  .hero-verse {
+    font-size: 30px;
     line-height: 1.7;
     font-weight: 800;
     color: #28487b;
     word-break: keep-all;
   }
 
-  .verse-ref {
+  .hero-ref {
     margin-top: 8px;
     font-size: 16px;
     color: #6a7ea5;
@@ -103,7 +86,7 @@
     margin-top: 20px;
     border: none;
     border-radius: 18px;
-    padding: 18px 28px;
+    padding: 18px 30px;
     font-size: 25px;
     font-weight: 900;
     background: #4d84ff;
@@ -112,11 +95,11 @@
     box-shadow: 0 10px 22px rgba(77,132,255,0.28);
   }
 
-  .small-note {
+  .feature-note {
     margin-top: 16px;
     color: #6c7e9f;
     font-size: 15px;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   #gameScreen {
@@ -132,8 +115,8 @@
     inset: 0;
     background:
       linear-gradient(rgba(8, 24, 56, 0.18), rgba(8, 24, 56, 0.24)),
-      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
-    opacity: 0.45;
+      url("https://commons.wikimedia.org/wiki/Special:FilePath/Beautiful_mountain_valley_and_lake_landscape.jpg") center/cover no-repeat;
+    opacity: 0.48;
     z-index: -1;
   }
 
@@ -147,21 +130,23 @@
     flex-wrap: wrap;
   }
 
-  .top-btn {
+  .top-btn, .music-select {
     border: none;
     border-radius: 14px;
     padding: 11px 14px;
     font-size: 15px;
     font-weight: 800;
-    cursor: pointer;
     color: #214a8a;
     background: rgba(255,255,255,0.94);
     box-shadow: 0 8px 18px rgba(0,0,0,0.12);
   }
 
+  .top-btn { cursor: pointer; }
+  .music-select { cursor: pointer; }
+
   .card {
     width: 100%;
-    max-width: 1020px;
+    max-width: 1040px;
     margin: 0 auto;
     background: rgba(255,255,255,0.97);
     border-radius: 30px;
@@ -359,7 +344,7 @@
     .title { font-size: 34px; }
     .question-text { font-size: 28px; }
     .typing-input { font-size: 22px; min-height: 135px; }
-    .verse-big { font-size: 24px; }
+    .hero-verse { font-size: 24px; }
   }
 
   @media (max-width: 520px) {
@@ -370,36 +355,32 @@
     .typing-input { font-size: 20px; }
     .info-grid { grid-template-columns: repeat(2, 1fr); }
     .top-bar { top: 8px; right: 8px; }
-    .top-btn { padding: 9px 11px; font-size: 14px; }
+    .top-btn, .music-select { padding: 9px 11px; font-size: 14px; }
     .main-btn { font-size: 22px; }
   }
 </style>
 </head>
 <body>
 
-<audio id="bgm" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+<audio id="bgm" loop preload="auto" volume="0.45">
+  <source id="bgmSource" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
 </audio>
 
 <div id="startScreen">
   <div class="start-card">
-    <h1 class="title">성경 타자 연습 9탄</h1>
-    <p class="sub">은혜로운 예수님 이미지와 함께 시작하는 업그레이드 버전</p>
+    <h1 class="title">성경 타자 연습 10탄</h1>
+    <p class="sub">경치 배경 + 더 차분한 시작 화면 + 음악 선택 구조로 업데이트</p>
 
-    <div class="jesus-frame">
-      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/CompositeJesus.JPG" alt="예수님 이미지">
-    </div>
-
-    <div class="verse-box">
-      <div class="verse-big">수고하고 무거운 짐 진 자들아 다 내게로 오라<br>내가 너희를 쉬게 하리라.</div>
-      <div class="verse-ref">마태복음 11:28</div>
+    <div class="hero-box">
+      <div class="hero-verse">여호와는 나의 목자시니 내게 부족함이 없으리로다.</div>
+      <div class="hero-ref">시편 23:1</div>
     </div>
 
     <button class="main-btn" id="startBtn">시작하기</button>
 
-    <div class="small-note">
-      오른쪽 위의 🎵 버튼으로 조용한 배경 찬양 재생<br>
-      시작하기를 누르면 성경 타자 연습이 시작됩니다
+    <div class="feature-note">
+      오른쪽 위에서 배경음 재생 / 음악 스타일 전환 가능<br>
+      다음 버전에서는 사용자가 직접 mp3 파일을 바꾸기 쉬운 구조로 더 확장 가능
     </div>
   </div>
 </div>
@@ -407,11 +388,16 @@
 <div id="gameScreen">
   <div class="top-bar">
     <button class="top-btn" onclick="toggleBGM()">🎵 찬양</button>
+    <select class="music-select" id="musicSelect" onchange="changeMusic()">
+      <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3">차분한 반주 1</option>
+      <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">차분한 반주 2</option>
+      <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3">잔잔한 반주 3</option>
+    </select>
     <button class="top-btn" onclick="shareSite()">📱 공유</button>
   </div>
 
   <div class="card">
-    <h1 class="title">성경 타자 연습 9탄</h1>
+    <h1 class="title">성경 타자 연습 10탄</h1>
     <p class="sub">구절을 보고 그대로 입력해 보세요</p>
 
     <div class="mode-bar">
@@ -518,6 +504,7 @@ const showAnswerBtn = document.getElementById("showAnswerBtn");
 const skipBtn = document.getElementById("skipBtn");
 const modeRandomBtn = document.getElementById("modeRandomBtn");
 const modeSequentialBtn = document.getElementById("modeSequentialBtn");
+const musicSelect = document.getElementById("musicSelect");
 const resultBox = document.getElementById("resultBox");
 const currentNum = document.getElementById("currentNum");
 const correctCountEl = document.getElementById("correctCount");
@@ -545,6 +532,9 @@ let sequentialIndex = 0;
 let skipCount = 0;
 let hintCount = 0;
 
+const bgm = document.getElementById("bgm");
+bgm.volume = 0.35;
+
 function normalizeText(text) {
   return text.replace(/\r\n/g, "\n").replace(/\s+/g, " ").trim();
 }
@@ -561,7 +551,6 @@ function updateInfoUI() {
   maxComboEl.textContent = maxCombo;
   skipCountEl.textContent = skipCount;
   hintCountEl.textContent = hintCount;
-
   const total = BIBLE_VERSES.length || 1;
   const remain = Math.max(0, total - usedIndexes.length);
   remainCountEl.textContent = remain;
@@ -600,7 +589,6 @@ function loadVerse() {
   typingInput.classList.remove("correct", "wrong");
   answerPreview.style.display = "none";
   answerPreview.textContent = "";
-
   currentIndex = randomMode ? getRandomIndex() : getSequentialIndex();
   const item = BIBLE_VERSES[currentIndex];
   verseRef.textContent = item.ref;
@@ -677,7 +665,6 @@ function checkAnswer() {
   }
 }
 async function toggleBGM() {
-  const bgm = document.getElementById("bgm");
   try {
     if (!bgmPlaying) {
       await bgm.play();
@@ -690,11 +677,23 @@ async function toggleBGM() {
     alert("브라우저가 재생을 막았어요. 버튼을 한 번 더 눌러보세요.");
   }
 }
+function changeMusic() {
+  const wasPlaying = bgmPlaying;
+  bgm.pause();
+  bgmPlaying = false;
+  bgm.src = musicSelect.value;
+  bgm.load();
+  if (wasPlaying) {
+    bgm.play().then(() => {
+      bgmPlaying = true;
+    }).catch(() => {});
+  }
+}
 async function shareSite() {
   const url = "https://kimchul77.github.io/bible-typing/";
   try {
     if (navigator.share) {
-      await navigator.share({ title: "성경 타자 연습 9탄", text: "성경 타자 연습 사이트", url });
+      await navigator.share({ title: "성경 타자 연습 10탄", text: "성경 타자 연습 사이트", url });
     } else if (navigator.clipboard) {
       await navigator.clipboard.writeText(url);
       alert("링크가 복사되었습니다! 카카오톡에 붙여넣기 해주세요 👍");
@@ -728,6 +727,5 @@ typingInput.addEventListener("keydown", function (e) {
 updateInfoUI();
 updateModeUI();
 </script>
-
 </body>
 </html>
